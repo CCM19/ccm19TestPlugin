@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <!-- Plugin specific CSS -->
+    <link rel="stylesheet" href="{{ path('assets_testplugin_css') }}?{{ _versionId }}" type="text/css" />
+{% endblock %}
+{% block content %}
+    <!-- Headline at the top -->
+    {% block content_heading %}<h1 class="mtn">{% trans %}Test Plugin{% endtrans %}</h1>{% endblock %}
+
+    <!-- Falsh messages if things are saved or error -->
+    {% include '_components/flash_messages.html.twig' %}
+
+    <form action="{{ path('app_testplugin_save') }}" method="POST" class="row bounded-width">
+        <div class="col-lg-12">
+            <fieldset class="panel" id="general_settings">
+                <legend class="panel-heading">
+                    <span class="panel-title">{% trans %}Example settings{% endtrans %}</span>
+                </legend>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="exampleInputName"
+                               class="col-lg-3 control-label">{% trans %}Example Data{% endtrans %}</label>
+                        <div class="col-lg-7 mb20">
+                            <div class="bs-component">
+                                <input type="text" id="exampleInputName" name="exampleInputName" value="{{ plugin.exampleInputName }}"
+                                       class="form-control"
+                                       required="required" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label for="expampleCheckboxData">{% trans %}Example Checkbox{% endtrans %}</label>
+                            <p>{% trans %}Some meaningful text.{% endtrans %}</p>
+                        </div>
+                        <div class="col-lg-7 mb20">
+                            <div class="switch switch-success">
+                                <input id="expampleCheckboxData" name="expampleCheckboxData" type="checkbox"
+                                       {% if plugin.expampleCheckboxData %}checked="checked"{% endif %}
+                                />
+                                <label for="expampleCheckboxData"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12"></div>
+                        <div class="col-lg-3">
+                             <label for="exampleSelectBox" class="">{% trans %}Example SelectField{% endtrans %}*</label>
+                        </div>
+                        <div class="col-lg-7">
+                            <select id="purpose" class="form-control" name="exampleSelectBox" >
+                                <option value="">{% trans %}Select{% endtrans %}</option>
+                                <option {% if plugin.exampleSelectBox ==1 %} selected="selected" {% endif %} value="1">{% trans %}Select 1{% endtrans %}</option>
+                                <option {% if plugin.exampleSelectBox ==2 %} selected="selected" {% endif %}value="2">{% trans %}Select 2{% endtrans %}</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="col-lg-12">
+
+        <input type="hidden" name="id" value="{{ plugin.id }}">
+        <input type="hidden" name="csrf_token" value="{{ csrfToken }}"/>
+        <button type="submit" name="action" value="save"
+                class="btn btn-success mb20">{% trans %}Save{% endtrans %}</button>
+        </div>
+    </form>
+
+    <!--
+    Simple Example...
+
+    <div class="row bounded-width">
+        <div class="col-md-12 col-lg-12">
+            <img src="{{ path('assets_testplugin_img') }}?imgname=testimage1.jpg" alt="" height="200" width="300" />
+            <ol>
+            {% for plugins in plugin %}
+                <li>{{ plugins.test }}</li>
+            {% endfor %}
+            </ol>
+        </div>
+    </div>
+    -->
+{% endblock %}
+
+
+{% block javascripts %}
+    <!-- Plugin specific JS -->
+    <script src="{{ path('assets_testplugin_js') }}?{{ _versionId }}" type="text/javascript"></script>
+{% endblock %}
+
